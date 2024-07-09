@@ -1,7 +1,13 @@
+
+#!/usr/bin/env gawk --exec
+#
+# Copyright (c) 2023 Jegors Čemisovs
+# License: MIT License
+# Repository: https://github.com/rabestro/graph-pathfinding-algorithms
+#
 BEGIN {
     FS = "[ :,{}]+"
-}
-BEGINFILE {
+
     match(FILENAME, /([^/]+)\.yaml/, GraphName)
     print "@startdot"
     print "digraph", GraphName[1], "{"
@@ -12,13 +18,11 @@ BEGINFILE {
 }
 {
     print $1
-}
-{
-    for (i = 2; i < NF; i += 2) {
+
+    for (i = 2; i < NF; i += 2)
         print $1, "->", $i, "[label=" $(i + 1) "];"
-    }
 }
-ENDFILE {
+END {
     print "}"
     print "@enddot"
 }
